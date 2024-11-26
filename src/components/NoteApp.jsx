@@ -13,8 +13,7 @@ class NoteApp extends React.Component {
     };
 
     this.onAddNoteEventHandler = this.onAddNoteEventHandler.bind(this);
-    this.onSearchKeywordChangeEventHandler =
-      this.onSearchKeywordChangeEventHandler.bind(this);
+    this.onSearchKeywordChangeEventHandler = this.onSearchKeywordChangeEventHandler.bind(this);
     this.onArchiveNoteEventHandler = this.onArchiveNoteEventHandler.bind(this);
     this.onDeleteNoteEventHandler = this.onDeleteNoteEventHandler.bind(this);
   }
@@ -27,8 +26,8 @@ class NoteApp extends React.Component {
     });
   }
 
-  onSearchKeywordChangeEventHandler(event) {
-    this.setState({ searchKeyword: event.target.value });
+  onSearchEventHandler(keyword) {
+    this.setState({ searchKeyword: keyword });
   }
 
   onArchiveNoteEventHandler(id) {
@@ -47,7 +46,7 @@ class NoteApp extends React.Component {
 
   onDeleteNoteEventHandler(id) {
     const [noteTarget] = this.state.notes.filter(note => note.id === id);
-    const confirmation = confirm(`Apakah anda yakin ingin menghapus note: ${noteTarget.title}?`);
+    const confirmation = confirm(`Apakah anda yakin ingin menghapus Catatan: ${noteTarget.title}?`);
     if (confirmation) {
       this.setState(prevState => {
         const newNotes = prevState.notes.filter(note => note.id !== id);
@@ -56,16 +55,32 @@ class NoteApp extends React.Component {
     }
   }
 
+  onSearchKeywordChangeEventHandler(event) {
+    this.setState({ searchKeyword: event.target.value });
+  }
+
+  searchNotesByKeyword(keyword) {
+    return this.state.notes.filter(note => note.title.toLowerCase().includes(keyword.toLowerCase()));
+  }
+
+  filterNotesByArchiveStatus(archived = false) {
+    const filteredNotesByKeyword = this.searchNotesByKeyword(this.state.searchKeyword);
+    if (archived) {
+      return filteredNotesByKeyword.filter(note => note.archived);
+    }
+    return filteredNotesByKeyword.filter(note => !note.archived);
+  }
+
   render() {
     return (
       <>
         <NoteAppHeader
           searchKeyword={this.state.searchKeyword}
-          onSearchKeywordHandler={this.onSearchKeywordChangeEventHandler}
+          onSearch={this.onSearchKeywordChangeEventHandler}
         />
         <NoteAppBody 
-          notes={this.state.notes.filter(note => !note.archived)} 
-          archivedNotes={this.state.notes.filter(note => note.archived)}
+          notes={this.filterNotesByArchiveStatus()} 
+          archivedNotes={this.filterNotesByArchiveStatus(true)}
           onAddNote={this.onAddNoteEventHandler} 
           onArchiveNote={this.onArchiveNoteEventHandler}
           onDeleteNote={this.onDeleteNoteEventHandler}

@@ -6,8 +6,4 @@ import NoteApp from './components/Noteapp';
 import './styles/style.css';
 
 const root = createRoot(document.getElementById('root'));
-root.render(
-  // <React.StrictMode>
-    <NoteApp />
-  // </React.StrictMode>
-);
+root.render(<NoteApp />);
