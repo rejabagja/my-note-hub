@@ -15,6 +15,12 @@ function NoteItem({ noteItem, onArchive, onDelete }) {
         <button
           className="note-item__delete-button"
           onClick={() => onDelete(noteItem.id)}
+          onMouseEnter={(event) => {
+            event.target.parentElement.previousSibling.style.opacity = "0.5";
+          }}
+          onMouseLeave={(event) => {
+            event.target.parentElement.previousSibling.style.opacity = "1";
+          }}
         >
           Delete
         </button>
