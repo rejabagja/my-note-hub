@@ -7,7 +7,7 @@ import './styles/style.css';
 
 const root = createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <NoteApp />
-  </React.StrictMode>
+  // </React.StrictMode>
 );
