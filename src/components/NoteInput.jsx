@@ -9,13 +9,9 @@ class NoteInput extends React.Component {
       body: '',
       maxTitleLength: 50,
     };
-
-    this.onTitleChangeEventHandler = this.onTitleChangeEventHandler.bind(this);
-    this.onBodyChangeEventHandler = this.onBodyChangeEventHandler.bind(this);
-    this.onSubmitEventHandler = this.onSubmitEventHandler.bind(this);
   }
 
-  onTitleChangeEventHandler(event) {
+  onTitleChangeEventHandler = (event) => {
     const { value } = event.target;
     const { maxTitleLength } = this.state;
     if (value.length <= maxTitleLength) {
@@ -23,18 +19,19 @@ class NoteInput extends React.Component {
     }
   }
 
-  onBodyChangeEventHandler(event) {
+  onBodyChangeEventHandler = (event) => {
     this.setState({ body: event.target.value });
   }
 
-  onSubmitEventHandler(event) {
+  onSubmitEventHandler = (event) => {
     event.preventDefault();
     
     this.props.addNote({
       id: +new Date(),
+      title: this.state.title,
+      body: this.state.body,
       createdAt: new Date().toISOString(),
       archived: false,
-      ...this.state,
     });
   }
 

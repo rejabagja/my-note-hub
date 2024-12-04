@@ -11,26 +11,17 @@ class NoteApp extends React.Component {
       notes: getInitialData(),
       searchKeyword: "",
     };
-
-    this.onAddNoteEventHandler = this.onAddNoteEventHandler.bind(this);
-    this.onSearchKeywordChangeEventHandler = this.onSearchKeywordChangeEventHandler.bind(this);
-    this.onArchiveNoteEventHandler = this.onArchiveNoteEventHandler.bind(this);
-    this.onDeleteNoteEventHandler = this.onDeleteNoteEventHandler.bind(this);
   }
 
-  onAddNoteEventHandler(newNote) {
+  onAddNoteEventHandler = (note) => {
     this.setState((prevState) => {
       return {
-        notes: [...prevState.notes, newNote],
+        notes: [...prevState.notes, note],
       };
     });
   }
 
-  onSearchEventHandler(keyword) {
-    this.setState({ searchKeyword: keyword });
-  }
-
-  onArchiveNoteEventHandler(id) {
+  onArchiveNoteEventHandler = (id) => {
     this.setState(prevState => {
       const index = prevState.notes.findIndex(note => note.id === id);
       // console.log(index);
@@ -44,7 +35,7 @@ class NoteApp extends React.Component {
     });
   }
 
-  onDeleteNoteEventHandler(id) {
+  onDeleteNoteEventHandler = (id) => {
     const [noteTarget] = this.state.notes.filter(note => note.id === id);
     const confirmation = confirm(`Apakah anda yakin ingin menghapus Catatan: ${noteTarget.title}?`);
     if (confirmation) {
@@ -55,7 +46,7 @@ class NoteApp extends React.Component {
     }
   }
 
-  onSearchKeywordChangeEventHandler(event) {
+  onSearchKeywordChangeEventHandler = (event) => {
     this.setState({ searchKeyword: event.target.value });
   }
 
